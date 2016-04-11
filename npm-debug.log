@@ -1,0 +1,32 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node',
+1 verbose cli   '/Users/guelfert/.meteor/packages/meteor-tool/.1.3.0_3.1kequoz++os.osx.x86_64+web.browser+web.cordova/mt-os.osx.x86_64/dev_bundle/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   '--save',
+1 verbose cli   'aldeed:simple-schema' ]
+2 info using npm@2.14.22
+3 info using node@v0.10.43
+4 verbose install initial load of /Users/guelfert/code/meteor/itsetups/package.json
+5 verbose installManyTop reading scoped package data from /Users/guelfert/code/meteor/itsetups/node_modules/react/package.json
+6 verbose installManyTop reading scoped package data from /Users/guelfert/code/meteor/itsetups/node_modules/react-dom/package.json
+7 verbose readDependencies loading dependencies from /Users/guelfert/code/meteor/itsetups/package.json
+8 verbose stack Error: Unsupported URL Type: aldeed:simple-schema
+8 verbose stack     at parseUrl (/Users/guelfert/.meteor/packages/meteor-tool/.1.3.0_3.1kequoz++os.osx.x86_64+web.browser+web.cordova/mt-os.osx.x86_64/dev_bundle/lib/node_modules/npm/node_modules/npm-package-arg/npa.js:169:13)
+8 verbose stack     at npa (/Users/guelfert/.meteor/packages/meteor-tool/.1.3.0_3.1kequoz++os.osx.x86_64+web.browser+web.cordova/mt-os.osx.x86_64/dev_bundle/lib/node_modules/npm/node_modules/npm-package-arg/npa.js:75:12)
+8 verbose stack     at resolver (/Users/guelfert/.meteor/packages/meteor-tool/.1.3.0_3.1kequoz++os.osx.x86_64+web.browser+web.cordova/mt-os.osx.x86_64/dev_bundle/lib/node_modules/npm/lib/install.js:845:42)
+8 verbose stack     at /Users/guelfert/.meteor/packages/meteor-tool/.1.3.0_3.1kequoz++os.osx.x86_64+web.browser+web.cordova/mt-os.osx.x86_64/dev_bundle/lib/node_modules/npm/node_modules/slide/lib/async-map.js:52:35
+8 verbose stack     at Array.forEach (native)
+8 verbose stack     at /Users/guelfert/.meteor/packages/meteor-tool/.1.3.0_3.1kequoz++os.osx.x86_64+web.browser+web.cordova/mt-os.osx.x86_64/dev_bundle/lib/node_modules/npm/node_modules/slide/lib/async-map.js:52:11
+8 verbose stack     at Array.forEach (native)
+8 verbose stack     at asyncMap (/Users/guelfert/.meteor/packages/meteor-tool/.1.3.0_3.1kequoz++os.osx.x86_64+web.browser+web.cordova/mt-os.osx.x86_64/dev_bundle/lib/node_modules/npm/node_modules/slide/lib/async-map.js:51:8)
+8 verbose stack     at /Users/guelfert/.meteor/packages/meteor-tool/.1.3.0_3.1kequoz++os.osx.x86_64+web.browser+web.cordova/mt-os.osx.x86_64/dev_bundle/lib/node_modules/npm/lib/install.js:703:5
+8 verbose stack     at /Users/guelfert/.meteor/packages/meteor-tool/.1.3.0_3.1kequoz++os.osx.x86_64+web.browser+web.cordova/mt-os.osx.x86_64/dev_bundle/lib/node_modules/npm/lib/install.js:368:22
+9 verbose cwd /Users/guelfert/code/meteor/itsetups
+10 error Darwin 12.6.0
+11 error argv "node" "/Users/guelfert/.meteor/packages/meteor-tool/.1.3.0_3.1kequoz++os.osx.x86_64+web.browser+web.cordova/mt-os.osx.x86_64/dev_bundle/bin/npm" "install" "--save" "aldeed:simple-schema"
+12 error node v0.10.43
+13 error npm  v2.14.22
+14 error Unsupported URL Type: aldeed:simple-schema
+15 error If you need help, you may report this error at:
+15 error     <https://github.com/npm/npm/issues>
+16 verbose exit [ 1, true ]
