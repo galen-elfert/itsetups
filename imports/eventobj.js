@@ -12,20 +12,16 @@ eventObj.prototype.setExported = function (exported) {
 };
 
 eventObj.prototype.setTimeStart = function(time) {
-    if (time instanceof String && Date.parse(time)) {
+    if (Date.parse(time)) {
         this.timeStart = new Date(time);
-    } else if (time instanceof Date) {
-        this.timeStart = time;
     } else {
         throw Error('Cannot validate start time');
     }
 };
 
 eventObj.prototype.setTimeEnd = function(time) {
-    if (time instanceof String && Date.parse(time)) {
+    if (Date.parse(time)) {
         this.timeEnd = new Date(time);
-    } else if (time instanceof Date) {
-        this.timeEnd = time;
     } else {
         throw Error('Cannot validate end time');
     }

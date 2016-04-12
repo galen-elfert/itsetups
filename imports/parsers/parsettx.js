@@ -39,29 +39,15 @@ parseTTX = function(contents) {
             blob.shift();
         }
         if (Date.parse(blob[0])) {
-            date = new Date(blob.shift());
-            console.log('Date:', date);
+            dateStr = blob.shift();
             blob = blob.slice(2);
         }
-        var [start, end] = blob.shift().split('\t').slice(0,2);
-        let thisEvent = {
-            exported: exported,
-            building: building,
-            timeStart: new Date(date),
-            timeEnd: new Date(date),
-            resources: []
-        };
-        thisEvent.timeStart.setHours(...start.split(':'));
-        thisEvent.timeEnd.setHours(...end.split(':'));
+        var [start, end, space, discard, attend] = blob.shift().split('\t').slice(0,5);
+        let thisEvent = new eventObj();
+        thisEvent.setTimeStart(dateStr+', '+start);
+        thisEvent.setTimeEnd(dateStr+', '+end);
         var details = blob.shift().split('\t').map(word => {return s.trim(word, '"');});
-        if (details[0]) {
-            thisEvent.onsite = details[0].trim().slice(8);
-        }
-        thisEvent.number = details[1].slice(1,6);
-        thisEvent.name = details[1].slice(7);
-        if (details[2]) {
-            thisEvent.contact = details[2];
-        }
+        thisEvent.setDetails(details);
         blob.shift();
         blob.forEach(function (line, index) {
             words = line.split('\t').map(word => {return s.trim(word, '"');});
