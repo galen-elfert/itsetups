@@ -76,3 +76,8 @@ eventObj.prototype.setDetails = function (details) {
         throw Error('Can not validate details (expected array of length 3)');
     }
 };
+
+eventObj.prototype.addResource = function (resource) {
+    this.resources = this.resources || [];
+    
+};

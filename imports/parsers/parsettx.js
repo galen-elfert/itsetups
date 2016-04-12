@@ -33,11 +33,13 @@ parseTTX = function(contents) {
     var events = [];
     var building, date;
     eventBlobs.forEach(function (blob) {
+        // On first event for new building
         if (blob[0].charAt(0) == '"') {
             building = s.trim(blob.shift(), '\"');
             console.log('Building:', building);
             blob.shift();
         }
+        // On first event for new date
         if (Date.parse(blob[0])) {
             dateStr = blob.shift();
             blob = blob.slice(2);
