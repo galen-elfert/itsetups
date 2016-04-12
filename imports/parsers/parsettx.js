@@ -23,7 +23,7 @@ parseTTX = function(contents) {
     });
 
     // Gather orphaned lines (certain line types seem to get split accross pages)
-    for (var i = 0; i < eventBlobs.length; i++) {
+    for (var i = 1; i < eventBlobs.length; i++) {
         if(eventBlobs[i].length < 3) {
             eventBlobs[i-1].push(...eventBlobs[i]);
             eventBlobs.splice(i,1);
