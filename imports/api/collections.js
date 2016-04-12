@@ -19,7 +19,7 @@ Events.schema = new SimpleSchema({
     onsite: {type: String, optional: true},
     contact: {type: String, optional: true},
     attend: {type: Number, optional: true},
-    resources: {type: [ResourceSchema]},
+    resources: {type: [ResourceSchema], optional: true},
     setupBy: {type: String, optional: true},
     setupTime: {type: Date, optional: true},
     pickupBy: {type: String, optional: true},
