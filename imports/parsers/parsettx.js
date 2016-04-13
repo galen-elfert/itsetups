@@ -1,3 +1,4 @@
+import { eventObj, resourceObj } from './eventobj.js';
 
 parseTTX = function(contents) {
     var count = 0;
@@ -51,15 +52,16 @@ parseTTX = function(contents) {
         var details = blob.shift().split('\t').map(word => {return s.trim(word, '"');});
         thisEvent.setDetails(details);
         blob.shift();
+        // Read and push resources from remaining lines
         blob.forEach(function (line, index) {
             words = line.split('\t').map(word => {return s.trim(word, '"');});
             if (words.length > 1) {
-                thisEvent.resources.push({
-                    quantity: parseFloat(words[1]),
-                    name: words[3]
-                });
-            } else if (words[0].trim()) {
-                thisEvent.resources[thisEvent.resources.length - 1].notes = words[0].replace(/[ ]{2,}/g, '\n');
+                let thisResource = new resourceObj();
+                thisResource.setName(words[3]);
+                thisResource.setQuantity(words[1]);
+                thisEvent.addResource(thisResource);
+            } else if (words[0].trim() !== '') {
+                thisEvent.resources[thisEvent.resources.length - 1].setNote(words[0].replace(/[ ]{2,}/g, '\n'));
             }
         });
         events.push(thisEvent);

@@ -6,7 +6,7 @@ export const Users = new Mongo.Collection('users');
 ResourceSchema = new SimpleSchema({
     quantity: {type: Number},
     name: {type: String},
-    note: {type: String}
+    note: {type: String, optional: true}
     });
 
 Events.schema = new SimpleSchema({
