@@ -1,42 +1,33 @@
 /* Constructor and methods for the base event object
  */
 
-export function resourceObj() { }
+import regexes from './regexes.js';
+import resourceObj from './resourceobj.js';
+import { isString } from '../utilities.js';
 
-resourceObj.prototype.setName = function (name) {
-    // Disabled validation here because for some reason s.trim is not returnig a string?
-    if(true) {
-        this.name = name;
-    } else {
-        throw Error('Can not validate resource name: '+String(name)+', '+typeof(name));
-    }
-};
+const eventObjVersion = '0.1.001';
 
-resourceObj.prototype.setQuantity = function (quantity) {
-    console.log('quantity: ', quantity);
-    if(parseFloat(quantity)) {
-        this.quantity = quantity;
-    } else {
-        throw Error('Can not validate resource quantity');
-    }
-};
+export default function eventObj() {
+    this.metadata = {};
+    this.metadata.version = eventObjVersion;
+}
 
-resourceObj.prototype.setNote = function (note) {
-    if(true) {
-        this.note = note;
-    } else {
-        throw Error('Can not validate resource note');
-    }
-};
-
-
-export function eventObj() { }
 
 eventObj.prototype.setExported = function (exported) {
     if (Date.parse(exported)) {
-        this.exported = new Date(exported);
+        this.metadata = this.metadata || {};
+        this.metadata.exported = new Date(exported);
     } else {
         throw Error('Can not validate exported date');
+    }
+};
+
+eventObj.prototype.setVersion = function (version) {
+    if (regexes.version.test(version)) {
+        this.metadata = this.metadata || {};
+        this.metadata.version = version;
+    } else {
+        throw Error('Can not validate version number');
     }
 };
 
@@ -57,8 +48,8 @@ eventObj.prototype.setTimeEnd = function(time) {
 };
 
 eventObj.prototype.setEventName = function (eventName) {
-    if (eventName instanceof String && eventName.length < 255) {
-        this.eventName = evenName;
+    if (isString(eventName) && eventName.length < 255) {
+        this.eventName = eventName;
     } else {
         throw Error('Cannot validate event name');
     }
@@ -73,7 +64,7 @@ eventObj.prototype.setEventNumber = function (eventNumber) {
 };
 
 eventObj.prototype.setBuilding = function (building) {
-    if (building instanceof String && building.length < 100) {
+    if (isString(building) && building.length < 50) {
         this.building = building;
     } else {
         throw Error('Can not validate building name');
@@ -81,10 +72,26 @@ eventObj.prototype.setBuilding = function (building) {
 };
 
 eventObj.prototype.setSpace = function (space) {
-    if (building instanceof String && building.length < 50) {
+    if (isString(space) && space.length < 50) {
         this.space = space;
     } else {
         throw Error('Can not validate space name');
+    }
+};
+
+eventObj.prototype.setType = function (type) {
+    if (isString(type) && type.length < 100) {
+        this.type = type;
+    } else {
+        throw Error('Can not validate event type');
+    }
+};
+
+eventObj.prototype.setAttend = function (attend) {
+    if (parseInt(attend)) {
+        this.attend = parseInt(attend);
+    } else {
+        throw Error('Can not validate attendance');
     }
 };
 
@@ -92,7 +99,6 @@ eventObj.prototype.setDetails = function (details) {
     // Expects a three element array from the TTX file
     //
     if (details instanceof Array && details.length == 3) {
-        console.log(details);
         if (details[0]) {
             this.onsite = details[0].match(/^[\s]*Onsite: (.+)/)[1];
         }
@@ -112,15 +118,13 @@ eventObj.prototype.addResource = function (resource) {
     if (resource instanceof resourceObj) {
         this.resources.push(resource);
     } else {
-        throw Error ('Can not validate resource')
+        throw Error ('Can not validate resource');
     }
 };
 
-/*
 eventObj.prototype.addResourceNote = function (note) {
     if(this.resources) {
         let last = this.resources.length - 1;
-        this.resources[last].setNote(note)
+        this.resources[last].appendNote(note);
     }
 };
-*/

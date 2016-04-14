@@ -1,6 +1,8 @@
 import './jquery.csv.js';
+import eventObj from '../objects/eventobj.js';
+import resourceObj from '../objects/resourceobj.js';
 
-parseCSV = function (contents) {
+export default function parseCSV(contents) {
     var index = {
         building: 1,
         date: 16,
@@ -17,6 +19,15 @@ parseCSV = function (contents) {
         let [start, end] = line[index.time].split(' - ');
         timeStart.setHours(...start.split(':'));
         timeEnd.setHours(...end.split(':'));
+        thisEvent = new eventObj();
+        thisEvent.setBuilding(line[index.building]);
+        thisEvent.setSpace(line[index.space]);
+        thisEvent.setTimeStart(timeStart);
+        thisEvent.setTimeEnd(timeEnd);
+        thisEvent.setEventName(line[index.eventName]);
+        console.log(line[index.eventNumber]);
+        thisEvent.setEventNumber(line[index.eventNumber].slice(1,5));
+        /*
         let thisEvent = {
             building: line[index.building],
             space: line[index.space],
@@ -25,7 +36,8 @@ parseCSV = function (contents) {
             eventNumber: line[index.eventNumber].substr(1,5),
             eventName: line[index.eventName]
         };
+        */
         return thisEvent;
     });
     return events;
-};
+}

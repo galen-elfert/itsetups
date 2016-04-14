@@ -1,9 +1,11 @@
-import { eventObj, resourceObj } from './eventobj.js';
+import eventObj from '../objects/eventobj.js';
+import resourceObj from '../objects/resourceobj.js';
 
-parseTTX = function(contents) {
+export default function parseTTX(contents) {
     var count = 0;
     var lines = contents.split('\n').map(line => {return line.trim();});
     var exported = new Date(lines.shift());
+
     console.log("exported:", exported);
     // Remove the rest of the header, and footer
     lines = lines.slice(3, -3);
@@ -45,26 +47,36 @@ parseTTX = function(contents) {
             dateStr = blob.shift();
             blob = blob.slice(2);
         }
-        var [start, end, space, discard, attend] = blob.shift().split('\t').slice(0,5);
+        var [start, end, space, type, attend] = blob.shift().split('\t').slice(0,5);
         let thisEvent = new eventObj();
+        thisEvent.setExported(exported);
         thisEvent.setTimeStart(dateStr+', '+start);
         thisEvent.setTimeEnd(dateStr+', '+end);
+        thisEvent.setSpace(space);
+        thisEvent.setType(type);
+        if (attend) { thisEvent.setAttend(attend); }
         var details = blob.shift().split('\t').map(word => {return s.trim(word, '"');});
         thisEvent.setDetails(details);
         blob.shift();
         // Read and push resources from remaining lines
-        blob.forEach(function (line, index) {
-            words = line.split('\t').map(word => {return s.trim(word, '"');});
-            if (words.length > 1) {
-                let thisResource = new resourceObj();
-                thisResource.setName(words[3]);
-                thisResource.setQuantity(words[1]);
-                thisEvent.addResource(thisResource);
-            } else if (words[0].trim() !== '') {
-                thisEvent.resources[thisEvent.resources.length - 1].setNote(words[0].replace(/[ ]{2,}/g, '\n'));
-            }
+        words = blob.map(line => {
+            return line.split('\t').map(word => {
+                return s.trim(word, '"');
+            });
         });
+        for (var i = 0; i < words.length; i++) {
+            if (words[i].length > 1) {
+                let thisResource = new resourceObj();
+                thisResource.setName(words[i][3]);
+                thisResource.setQuantity(words[i][1]);
+                thisEvent.addResource(thisResource);
+            } else if (words[i].length == 1) {
+                thisEvent.addResourceNote(words[i][0]);
+            } else {
+                throw Error('Resource validation error');
+            }
+        }
         events.push(thisEvent);
     });
     return events;
-};
+}

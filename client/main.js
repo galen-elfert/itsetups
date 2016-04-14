@@ -1,9 +1,9 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 import '../imports/startup/routes.js';
-import '../imports/api/collections.js';
-import '../imports/parsers/parsettx.js';
-import '../imports/parsers/parsecsv.js';
+import { Events, Users} from '../imports/api/collections.js';
+import parseTTX from '../imports/parsers/parsettx.js';
+import parseCSV from '../imports/parsers/parsecsv.js';
 
 Template.hello.onCreated(function helloOnCreated() {
   // counter starts at 0
@@ -29,16 +29,25 @@ Template.upload.events({
         let file = files[0];
         let fileName = files[0].name;
         let extension = fileName.split('.')[1].toLowerCase();
+        var output;
         if (window.FileReader) {
             console.log('FileReader supported');
             let reader = new FileReader();
             if (extension == 'ttx') {
                 reader.onload = function(event) {
-                    console.log(parseTTX(reader.result));
+                    output = parseTTX(reader.result);
+                    console.log(output);
+                    output.forEach(item => {
+                        Events.schema.validate(item);
+                    });
                 };
             } else if (extension == 'csv') {
                 reader.onload = function(event) {
-                    console.log(parseCSV(reader.result));
+                    output = parseCSV(reader.result);
+                    console.log(output);
+                    output.forEach(item => {
+                        Events.schema.validate(item);
+                    });
                 };
             }
 
