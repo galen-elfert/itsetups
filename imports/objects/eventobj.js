@@ -5,13 +5,9 @@ import regexes from './regexes.js';
 import resourceObj from './resourceobj.js';
 import { isString } from '../utilities.js';
 
-const eventObjVersion = '0.1.001';
-
 export default function eventObj() {
     this.metadata = {};
-    this.metadata.version = eventObjVersion;
 }
-
 
 eventObj.prototype.setExported = function (exported) {
     if (Date.parse(exported)) {

@@ -11,7 +11,7 @@ export default function parseTTX(contents) {
     lines = lines.slice(3, -3);
     if(Date.parse(lines[0].split('-')[0])) { lines.shift(); }
 
-    // Group lines into events, by on vertical separation
+    // Group lines into events, by vertical separation
     var eventBlobs = [[]];
     lines.forEach(function (line) {
         if(line !== '') {
@@ -49,6 +49,7 @@ export default function parseTTX(contents) {
         }
         var [start, end, space, type, attend] = blob.shift().split('\t').slice(0,5);
         let thisEvent = new eventObj();
+        thisEvent.setBuilding(building);
         thisEvent.setExported(exported);
         thisEvent.setTimeStart(dateStr+', '+start);
         thisEvent.setTimeEnd(dateStr+', '+end);
