@@ -22,7 +22,6 @@
         - Check if first line is date
             - If not, throw error.
         - Set state.exported to date.
-        -
 
 - Conflict resolution:
     - Imported events which match all properties (except for setup/pickup checks, and cancelled resources) should be ignored.
