@@ -40,3 +40,19 @@ resourceObj.prototype.appendNote = function (note) {
         throw Error('Can not validate resource note');
     }
 };
+
+resourceObj.prototype.setTimeStart = function (time) {
+    if(time instanceof Date) {
+        this.timeStart = time;
+    } else {
+        throw Error('Can not validate resource start time');
+    }
+};
+
+resourceObj.prototype.setTimeEnd = function (time) {
+    if(time instanceof Date) {
+        this.timeEnd = time;
+    } else {
+        throw Error('Can not validate resource end time');
+    }
+};

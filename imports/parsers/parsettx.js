@@ -1,7 +1,9 @@
 import eventObj from '../objects/eventobj.js';
 import resourceObj from '../objects/resourceobj.js';
+import roomObj from '../objects/roomobj.js';
 
 export default function parseTTX(contents) {
+    var source = 'ttx';
     var count = 0;
     var lines = contents.split('\n').map(line => {return line.trim();});
     var exported = new Date(lines.shift());
@@ -34,7 +36,9 @@ export default function parseTTX(contents) {
     }
 
     var events = [];
-    var building, date;
+    var buildings = new Set();
+    var rooms = new Set();
+    var dateFirst, dateLast, building, date;
     eventBlobs.forEach(function (blob) {
         // On first event for new building
         if (blob[0].charAt(0) == '"') {
@@ -47,8 +51,9 @@ export default function parseTTX(contents) {
             dateStr = blob.shift();
             blob = blob.slice(2);
         }
-        var [start, end, space, type, attend] = blob.shift().split('\t').slice(0,5);
+        var [start, end, space, type, attend] = blob.shift().split('\t').slice(0,5).map(val => s.trim(val, '"'));
         let thisEvent = new eventObj();
+        thisEvent.setSource(source);
         thisEvent.setBuilding(building);
         thisEvent.setExported(exported);
         thisEvent.setTimeStart(dateStr+', '+start);

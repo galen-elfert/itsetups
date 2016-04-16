@@ -3,6 +3,8 @@ import '../imports/startup/routes.js';
 import { Events, Users, Spaces} from '../imports/api/collections.js';
 import parseTTX from '../imports/parsers/parsettx.js';
 import parseCSV from '../imports/parsers/parsecsv.js';
+import roomObj from '../imports/objects/roomobj.js';
+import { mergeEvents } from '../imports/objects/eventfunc.js';
 
 Template.upload.events({
     'change [name="fileUpload"]' (event, template) {
@@ -22,15 +24,17 @@ Template.upload.events({
             reader.onload = function(event) {
                 try {
                     let output = parse(reader.result);
-                    console.log(output);
                     // Get a set of all unique rooms
-                    let rooms = new Set(output.map(event => {
-                        return {
-                            building: event.building,
-                            space: event.space
-                        };
-                    }));
-                    console.log(rooms);
+                    let roomsStr = new Set(output.map(event => [event.building, event.space].join('|')));
+                    //let rooms =
+                    // Get buildings and dates:
+                    let buildings = new Set([...roomsStr].map(room => room.split('|')[0]));
+                    let dates = new Set(output.map(event => event.timeStart));
+                    let dateStart = Math.min(...dates);
+                    let dateEnd = Math.max(...dates);
+                    console.log('Rooms:', roomsStr);
+                    console.log('Buildings:', buildings);
+                    console.log('Date range', dateStart, dateEnd);
                 } catch (err) {
                     alert(err);
                     console.log(err);

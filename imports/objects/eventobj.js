@@ -11,7 +11,6 @@ export default function eventObj() {
 
 eventObj.prototype.setExported = function (exported) {
     if (Date.parse(exported)) {
-        this.metadata = this.metadata || {};
         this.metadata.exported = new Date(exported);
     } else {
         throw Error('Can not validate exported date');
@@ -20,10 +19,18 @@ eventObj.prototype.setExported = function (exported) {
 
 eventObj.prototype.setVersion = function (version) {
     if (regexes.version.test(version)) {
-        this.metadata = this.metadata || {};
         this.metadata.version = version;
     } else {
         throw Error('Can not validate version number');
+    }
+};
+
+eventObj.prototype.setSource = function (source) {
+    var sources = new Set(['csv', 'ttx'])
+    if (sources.has(source)) {
+        this.metadata.source = source;
+    } else {
+        throw Error('Can not validate source');
     }
 };
 

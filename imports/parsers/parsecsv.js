@@ -3,6 +3,7 @@ import eventObj from '../objects/eventobj.js';
 import resourceObj from '../objects/resourceobj.js';
 
 export default function parseCSV(contents) {
+    var source = 'csv';
     var index = {
         building: 1,
         date: 16,
@@ -20,6 +21,7 @@ export default function parseCSV(contents) {
         timeStart.setHours(...start.split(':'));
         timeEnd.setHours(...end.split(':'));
         thisEvent = new eventObj();
+        thisEvent.setSource(source);
         thisEvent.setBuilding(line[index.building]);
         thisEvent.setSpace(line[index.space]);
         thisEvent.setTimeStart(timeStart);
