@@ -1,6 +1,6 @@
 import eventObj from '../objects/eventobj.js';
 import resourceObj from '../objects/resourceobj.js';
-import roomObj from '../objects/roomobj.js';
+import spaceObj from '../objects/spaceobj.js';
 
 export default function parseTTX(contents) {
     var source = 'ttx';
@@ -8,7 +8,6 @@ export default function parseTTX(contents) {
     var lines = contents.split('\n').map(line => {return line.trim();});
     var exported = new Date(lines.shift());
 
-    console.log("exported:", exported);
     // Remove the rest of the header, and footer
     lines = lines.slice(3, -3);
     if(Date.parse(lines[0].split('-')[0])) { lines.shift(); }
@@ -37,21 +36,27 @@ export default function parseTTX(contents) {
 
     var events = [];
     var buildings = new Set();
-    var rooms = new Set();
+    var spacesStr = new Set();
     var dateFirst, dateLast, building, date;
     eventBlobs.forEach(function (blob) {
         // On first event for new building
         if (blob[0].charAt(0) == '"') {
             building = s.trim(blob.shift(), '\"');
-            console.log('Building:', building);
+            buildings.add(building)
             blob.shift();
         }
         // On first event for new date
         if (Date.parse(blob[0])) {
             dateStr = blob.shift();
+            dateFirst = new Date(dateFirst ? Math.min(dateFirst, Date.parse(dateStr)) : dateStr);
+            dateLast = new Date(dateLast ? Math.max(dateLast, Date.parse(dateStr)) : dateStr);
             blob = blob.slice(2);
         }
         var [start, end, space, type, attend] = blob.shift().split('\t').slice(0,5).map(val => s.trim(val, '"'));
+
+        // Add stringified version of space. Making it a string allows Set to detect uniqueness.
+        // Later will be converted to objects.
+        spacesStr.add(building + '|' + space);
         let thisEvent = new eventObj();
         thisEvent.setSource(source);
         thisEvent.setBuilding(building);
@@ -84,5 +89,15 @@ export default function parseTTX(contents) {
         }
         events.push(thisEvent);
     });
-    return events;
+    dateFirst.setHours(0);
+    dateLast.setHours(0);
+    dateLast.setDate(dateLast.getDate() + 1);
+    return {
+        events: events,
+        buildings: [...buildings],
+        spaces: [...spacesStr].map(str => new spaceObj(...str.split('|'))),
+        dateFirst: dateFirst,
+        dateLast: dateLast,
+        exported: exported
+    };
 }

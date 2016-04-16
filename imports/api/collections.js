@@ -22,6 +22,7 @@ Schemas.Resource = new SimpleSchema({
 
 Schemas.MetaData = new SimpleSchema({
     exported: {type: Date},
+    source: {type: String},
     version: {type: String, defaultValue: eventObjVersion, regEx: regexes.version}
 });
 

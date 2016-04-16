@@ -106,7 +106,7 @@ eventObj.prototype.setDetails = function (details) {
             this.onsite = details[0].match(/^[\s]*Onsite: (.+)/)[1];
         }
         let eventDet = details[1].match(/^#([0-9]{5,})[\s]*(.+)/);
-        this.eventNumber = eventDet[1];
+        this.eventNumber = parseInt(eventDet[1]);
         this.eventName = eventDet[2];
         if(details[2]) {
             this.contact = details[2];
