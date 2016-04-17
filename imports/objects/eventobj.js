@@ -26,7 +26,7 @@ eventObj.prototype.setVersion = function (version) {
 };
 
 eventObj.prototype.setSource = function (source) {
-    var sources = new Set(['csv', 'ttx'])
+    var sources = new Set(['csv', 'ttx']);
     if (sources.has(source)) {
         this.metadata.source = source;
     } else {

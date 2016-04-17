@@ -36,7 +36,8 @@ export default function parseCSV(contents) {
         thisEvent.setTimeStart(timeStart);
         thisEvent.setTimeEnd(timeEnd);
         thisEvent.setEventName(line[index.eventName]);
-        thisEvent.setEventNumber(line[index.eventNumber].slice(1,5));
+        thisEvent.setEventNumber(line[index.eventNumber].slice(1,6));
+        thisEvent.setExported(exported);
         /*
         let thisEvent = {
             building: line[index.building],
