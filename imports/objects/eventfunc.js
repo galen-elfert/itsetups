@@ -36,7 +36,8 @@ export function mergeEvents(input) {
                         events.splice(k, 1);
                     } else {
                         console.log('Mismatched overlapping events:', events[i], events[k]);
-                        throw Error('Mismatched overlapping events:');
+                        // throw Error('Mismatched overlapping events:');
+                        events.splice(k, 1);
                     }
             }
         }

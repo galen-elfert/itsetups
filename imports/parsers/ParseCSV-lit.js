@@ -4,7 +4,7 @@ import resourceObj from '../objects/resourceobj.js';
 import spaceObj from '../objects/spaceobj.js';
 
 export default function parseCSV(contents) {
-    const version = '0.1.001';
+    var source = 'csv';
     var exported = new Date('Mar 30 2016');
     var buildings = new Set();
     var spacesStr = new Set();
@@ -27,8 +27,20 @@ export default function parseCSV(contents) {
         let [start, end] = line[index.time].split(' - ');
         timeStart.setHours(...start.split(':'));
         timeEnd.setHours(...end.split(':'));
-        thisEvent = new eventObj();
-        thisEvent.setVersion(version)
+        // thisEvent = new eventObj();
+        let thisEvent = {
+            building: line[index.building],
+            space: line[index.space],
+            eventName: line[index.eventName],
+            eventNumber: line[index.eventNumber].substr(1,5),
+            timeStart: timeStart,
+            timeEnd: timeEnd,
+            metadata: {
+                exported: exported
+            }
+        };
+        /*
+        thisEvent.setSource(source);
         thisEvent.setBuilding(line[index.building]);
         buildings.add(line[index.building]);
         thisEvent.setSpace(line[index.space]);
@@ -38,6 +50,7 @@ export default function parseCSV(contents) {
         thisEvent.setEventName(line[index.eventName]);
         thisEvent.setEventNumber(line[index.eventNumber].slice(1,6));
         thisEvent.setExported(exported);
+        */
         return thisEvent;
     });
     return {

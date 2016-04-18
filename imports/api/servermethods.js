@@ -6,13 +6,6 @@ Meteor.methods({
         var modified = [];
         events.forEach(event => {
             // If event has resource then upsert, if not then insert only if no match
-            console.log('Inserting: ', event);
-            let thisModifier;
-            if (event.resources) {
-                thisModifier = {event};
-            } else {
-                thisModifier = {$set:{}};
-            }
             let thisInsert = Events.upsert({
                     // Selector: match building and space, overlapping time
                     building: event.building,
@@ -20,7 +13,7 @@ Meteor.methods({
                     timeStart: {$lte: event.timeEnd},
                     timeEnd: {$gte: event.timeStart}
                 },
-                thisModifier,
+                {$set: event},
                 function (error, affected) {
                     if (error) {
                         console.log('Error:', error);
@@ -28,7 +21,8 @@ Meteor.methods({
                         console.log('Updated ' + affected + ' events');
                     }
                 });
-            modified.push(thisInsert.insertedId);
+            console.log('Return: ', thisInsert);
+            //modified.push(thisInsert.insertedId);
         });
         // Next step: Remove all events in db matching buildings and times
         // which were not updated (assumed cancelled).
@@ -42,6 +36,25 @@ Meteor.methods({
             } else {
                 console.log('Inserted: ', id);
             }
-        })
+        });
+    },
+    'upsertEvent': function (event) {
+        Events.upsert({
+            // Selector: match building and space, overlapping time
+            building: event.building,
+            space: event.space,
+            timeStart: {$lte: event.timeEnd},
+            timeEnd: {$gte: event.timeStart}
+        },
+        {$set: {
+            resources: event.resources
+        }},
+        function (error, affected) {
+            if (error) {
+                console.log('Error:', error);
+            } else {
+                console.log('Updated ' + affected + ' events');
+            }
+        });
     }
 });

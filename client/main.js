@@ -24,7 +24,7 @@ Template.upload.events({
             }
             reader.onload = function(event) {
                 // try {
-                    let newEvents = testParser(reader.result);
+                    let newEvents = parser(reader.result);
                     console.log('Events:', newEvents.events);
                     console.log('Spaces:', newEvents.spaces);
                     console.log('Buildings:', newEvents.buildings);
@@ -32,7 +32,7 @@ Template.upload.events({
                     eventsMerged = mergeEvents(newEvents.events);
                     console.log('Events (merged):', eventsMerged);
                     // Meteor.call('uploadEvents', eventsMerged);
-                    Meteor.call('insertEvent', eventsMerged[0]);
+                    Meteor.call('uploadEvents', eventsMerged);
                 // } catch (err) {
                 //     alert(err);
                 //     console.log(err);

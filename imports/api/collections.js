@@ -5,7 +5,7 @@ export const Events = new Mongo.Collection('events');
 export const Users = new Mongo.Collection('users');
 export const Spaces = new Mongo.Collection('spaces');
 
-const eventObjVersion = '0.1.001';
+SimpleSchema.debug = true;
 
 var Schemas = {};
 
@@ -22,8 +22,7 @@ Schemas.Resource = new SimpleSchema({
 
 Schemas.MetaData = new SimpleSchema({
     exported: {type: Date},
-    source: {type: String},
-    version: {type: String, defaultValue: eventObjVersion, regEx: regexes.version}
+    version: {type: String, regEx: regexes.version}
 });
 
 Schemas.Event = new SimpleSchema({

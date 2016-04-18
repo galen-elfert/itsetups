@@ -3,7 +3,6 @@ import resourceObj from '../objects/resourceobj.js';
 import spaceObj from '../objects/spaceobj.js';
 
 export default function parseTTX(contents) {
-    var source = 'ttx';
     var count = 0;
     var lines = contents.split('\n').map(line => {return line.trim();});
     var exported = new Date(lines.shift());
@@ -34,6 +33,7 @@ export default function parseTTX(contents) {
         }
     }
 
+    const version = '0.1.001';
     var events = [];
     var buildings = new Set();
     var spacesStr = new Set();
@@ -58,7 +58,7 @@ export default function parseTTX(contents) {
         // Later will be converted to objects.
         spacesStr.add(building + '|' + space);
         let thisEvent = new eventObj();
-        thisEvent.setSource(source);
+        thisEvent.setVersion(version)
         thisEvent.setBuilding(building);
         thisEvent.setExported(exported);
         thisEvent.setTimeStart(dateStr+', '+start);
