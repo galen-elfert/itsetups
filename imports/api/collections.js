@@ -17,7 +17,9 @@ Schemas.Resource = new SimpleSchema({
     setupTime: {type: Date, optional: true},
     pickupBy: {type: String, optional: true},
     pickupTime: {type: Date, optional: true},
-    cancelled: {type: Boolean, defaultValue: false}
+    cancelled: {type: Boolean, optional: true, defaultValue: false}
+    timeStart: {type: Date, optional: true},
+    timeEnd: {type: Date, optional: true}, 
 });
 
 Schemas.MetaData = new SimpleSchema({

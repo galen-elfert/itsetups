@@ -79,7 +79,7 @@ export default function parseTTX(contents) {
             if (words[i].length > 1) {
                 let thisResource = new resourceObj();
                 thisResource.setName(words[i][3]);
-                thisResource.setQuantity(words[i][1]);
+                thisResource.setQuantity(parseInt(words[i][1]));
                 thisEvent.addResource(thisResource);
             } else if (words[i].length == 1) {
                 thisEvent.addResourceNote(words[i][0]);
