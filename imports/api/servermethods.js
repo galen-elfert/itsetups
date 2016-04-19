@@ -30,8 +30,8 @@ Meteor.methods({
                     });
                 } else {
                     console.log('Stale dated or wrong filetype, skipping update');
-                    console.log('Existing:', result.eventNumber+' '+result.eventName+', '+result.timeStart.getHours()+'-'+result.timeEnd.getHours());
-                    console.log('New:', event.eventNumber+' '+event.eventName+', '+event.timeStart.getHours()+'-'+event.timeEnd.getHours());
+                    console.log('    Existing:', result.eventNumber+' '+result.eventName+', '+result.timeStart.getHours()+'-'+result.timeEnd.getHours());
+                    console.log('    New:     ', event.eventNumber+' '+event.eventName+', '+event.timeStart.getHours()+'-'+event.timeEnd.getHours());
                 }
             } else {
                 // No match found, insert new event

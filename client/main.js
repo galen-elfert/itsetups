@@ -7,6 +7,11 @@ import testParser from '../imports/parsers/testparser.js';
 import spaceObj from '../imports/objects/spaceobj.js';
 import { mergeEvents } from '../imports/objects/eventfunc.js';
 
+
+Template.main.onRendered(
+    
+)
+
 Template.upload.events({
     'change [name="fileUpload"]' (event, template) {
         let files = event.target.files;

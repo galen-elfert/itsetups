@@ -23,3 +23,4 @@ aldeed:simple-schema
 iron:router
 underscorestring:underscore.string
 aldeed:collection2
+react-meteor-data
